@@ -205,4 +205,7 @@ class MyVectorTest {
         assertThrows(IndexOutOfBoundsException.class, ()->vector.getElementAtIndex(6),
                 "The function should throw exception. Can not get non existing element");
     }
+
+    //interaction with other arrays
+
 }

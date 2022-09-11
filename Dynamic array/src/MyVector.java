@@ -120,5 +120,28 @@ public class MyVector {
         container[--size] = 0;
     }
 
-    //interaction with other arrays
+    //interaction with other arrays functions
+    public void swap(MyVector other){
+       int[] tempContainer;
+       int tempSize, tempCapacity;
+
+       tempContainer = other.container;
+       tempSize = other.size;
+       tempCapacity = other.capacity;
+
+       other.container = container;
+       other.size = size;
+       other.capacity = capacity;
+
+       container = tempContainer;
+       size = tempSize;
+       capacity = tempCapacity;
+    }
+
+    public void concatenate(int[] array){
+        for(int element: array){
+            this.add(element);
+        }
+    }
+
 }
