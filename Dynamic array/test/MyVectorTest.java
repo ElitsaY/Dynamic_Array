@@ -108,6 +108,7 @@ class MyVectorTest {
         assertEquals(minimumSpace, vector.capacity(), "The capacity should be equal to the minimum space = 1");
     }
 
+    //dynamic array operations tests
     @Test
     public void testEmptyFuncWithEmptyDynamicArray(){
         MyVector vector = new MyVector();
@@ -174,5 +175,34 @@ class MyVectorTest {
         //the result should be as the above tests but with one less position in the static array
         assertEquals(3, vector.size());
         assertEquals(3, vector.getElementAtIndex(vector.size() - 1));
+    }
+
+    //getters and setters exception check
+    @Test
+    public void testSetElementAtIndexFuncWithInvalidIndex(){
+        int[] array = {1, 2, 3, 4, 5};
+        MyVector vector = new MyVector(array);
+        assertThrows(IndexOutOfBoundsException.class, ()-> vector.setElementAtIndex( -1, 20),
+                "The function should throw exception. The dynamic array can not have negative indexes");
+        assertThrows(IndexOutOfBoundsException.class, ()->vector.setElementAtIndex(6, 20),
+                "The function should throw exception. Can not assign value to non existing element");
+    }
+
+    @Test
+    public void testSetElementAtIndexFuncWithValidIndex(){
+        int[] array = {1, 2, 3, 4, 5};
+        MyVector vector = new MyVector(array);
+        vector.setElementAtIndex(2, 19);
+        assertEquals(19, vector.getElementAtIndex(2), "The 3rd value should be updated to 19");
+    }
+
+    @Test
+    public void testGetElementAtIndexFuncWithInvalidIndex(){
+        int[] array = {1, 2, 3, 4, 5};
+        MyVector vector = new MyVector(array);
+        assertThrows(IndexOutOfBoundsException.class, ()-> vector.getElementAtIndex( -1),
+                "The function should throw exception. The dynamic array can not have negative indexes");
+        assertThrows(IndexOutOfBoundsException.class, ()->vector.getElementAtIndex(6),
+                "The function should throw exception. Can not get non existing element");
     }
 }
