@@ -85,8 +85,15 @@ public class MyVector {
     }
 
     public void shrinkToFit(){
-        container = Arrays.copyOf(container, size);
-        capacity = size;
+        if(size == 0){
+            final int minimumSpace = 1;
+            container = Arrays.copyOf(container, minimumSpace);
+            capacity = minimumSpace;
+        }
+        else {
+            container = Arrays.copyOf(container, size);
+            capacity = size;
+        }
     }
 
     //dynamic array operations
