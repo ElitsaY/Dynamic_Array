@@ -17,6 +17,9 @@ public class MyVector {
     }
 
     MyVector(int newSize){
+        if(newSize < 1){
+            throw new IllegalArgumentException("Can not construct array with negative size");
+        }
         container = new int[newSize];
         size = newSize;
         capacity = newSize;
@@ -36,6 +39,10 @@ public class MyVector {
 
     public int capacity(){
         return capacity;
+    }
+
+    public final int getInitialCapacity(){
+        return INITIAL_CAPACITY;
     }
 
     public int getElementAtIndex(int index){
