@@ -97,10 +97,28 @@ public class MyVector {
     }
 
     //dynamic array operations
-    //empty
-    //clear
-    //add
-    //remove
+
+    public boolean empty(){
+        return size == 0;
+    }
+
+    public void clear(){
+        size = 0;
+    }
+
+    public void add(int element){
+        if( size + 1 >= capacity){
+            resize(size * GROWTH_COEFFICIENT);
+        }
+        container[size++] = element;
+    }
+
+    public void remove(){
+        if(size <= 0){
+            throw new IndexOutOfBoundsException("The dynamic array is already empty");
+        }
+        container[--size] = 0;
+    }
 
     //interaction with other arrays
 }
