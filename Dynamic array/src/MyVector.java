@@ -28,11 +28,34 @@ public class MyVector {
         size = array.length;
         capacity = array.length;
     }
-    //memory related functions
 
+    //getters and setters
+    public int size(){
+        return size;
+    }
+
+    public int capacity(){
+        return capacity;
+    }
+
+    public int getElementAtIndex(int index){
+        if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("The index is out og the array scope");
+        }
+        return container[index];
+    }
+
+    public void setElementAtIndex(int index, int element){
+        if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("The index is out og the array scope");
+        }
+        container[index] = element;
+    }
+
+    //memory related functions
     public void reserve(int requiredCapacity){
         if(requiredCapacity < 1){
-            //exception
+            throw new IllegalArgumentException("The requiredCapacity should be more than 1");
         }
 
         if (capacity < requiredCapacity){
@@ -43,7 +66,7 @@ public class MyVector {
     //resize
     public void resize(int newCapacity){
         if(newCapacity < 1){
-            //exception
+            throw new IllegalArgumentException("The newCapacity should be more than 1");
         }
 
         container = Arrays.copyOf(container, newCapacity);
@@ -60,6 +83,10 @@ public class MyVector {
     }
 
     //dynamic array operations
+    //empty
+    //clear
+    //add
+    //remove
 
     //interaction with other arrays
 }
