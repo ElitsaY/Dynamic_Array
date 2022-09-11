@@ -23,12 +23,41 @@ public class MyVector {
     }
 
     MyVector(int[] array){
-        container = new int[array.length];
+        //container = new int[array.length];
         container = Arrays.copyOf(array, array.length);
         size = array.length;
         capacity = array.length;
     }
     //memory related functions
+
+    public void reserve(int requiredCapacity){
+        if(requiredCapacity < 1){
+            //exception
+        }
+
+        if (capacity < requiredCapacity){
+            container = Arrays.copyOf(container, requiredCapacity);
+            capacity = requiredCapacity;
+        }
+    }
+    //resize
+    public void resize(int newCapacity){
+        if(newCapacity < 1){
+            //exception
+        }
+
+        container = Arrays.copyOf(container, newCapacity);
+        capacity = newCapacity;
+
+        if( size > newCapacity) {
+            size = newCapacity;
+        }
+    }
+
+    public void shrinkToFit(){
+        container = Arrays.copyOf(container, size);
+        capacity = size;
+    }
 
     //dynamic array operations
 
