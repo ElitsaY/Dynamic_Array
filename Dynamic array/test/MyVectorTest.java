@@ -206,6 +206,54 @@ class MyVectorTest {
                 "The function should throw exception. Can not get non existing element");
     }
 
-    //interaction with other arrays
+    //interaction with other section
+    @Test
+    public void testConcatenateFunc(){
+        int[] array = {1, 2, 3, 4, 5};
+        MyVector vector = new MyVector(array);
+
+        int[] array2 = {6, 7, 8};
+        vector.concatenate(array2);
+
+        assertEquals(8, vector.size(), "The size is the sum of the two arrays");
+        //the following code check the elements in linear time
+        for(int i = 0; i < vector.size(); i++){
+            if( i < array.length){
+                assertEquals(array[i], vector.getElementAtIndex(i), "The values of the array should be the same as the dyn array");
+            }
+            else {
+                assertEquals(array2[i - array.length], vector.getElementAtIndex(i),
+                        "The values of the array2 should be the same as the dyn array");
+            }
+        }// end of for
+    }//end of test
+
+    @Test
+    public void testSwapFunctions(){
+        int[] array = {1, 2, 3, 4, 5};
+        MyVector vector = new MyVector(array);
+        vector.reserve(10);
+        int capacity1 = vector.capacity();
+
+        int[] array2 = {6, 7, 8};
+        MyVector vector2 = new MyVector(array2);
+        vector2.reserve(15);
+        int capacity2 = vector2.capacity();
+
+        vector.swap(vector2);
+
+        //checking the swap pf the capacity value
+        assertEquals(capacity1, vector2.capacity());
+        assertEquals(capacity2, vector.capacity());
+
+        for(int i = 0; i < vector.size(); i++){
+            assertEquals(array2[i], vector.getElementAtIndex(i),
+                    "The elements of the first dyn array should be the same the elements of the second static array");
+        }
+        for(int i = 0; i < vector2.size(); i++){
+            assertEquals(array[i], vector2.getElementAtIndex(i),
+                    "The elements of the second dyn array should be the same the elements of the first static array");
+        }
+    }
 
 }

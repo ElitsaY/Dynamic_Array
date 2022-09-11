@@ -120,7 +120,7 @@ public class MyVector {
         container[--size] = 0;
     }
 
-    //interaction with other arrays functions
+    //interaction with other arrays section
     public void swap(MyVector other){
        int[] tempContainer;
        int tempSize, tempCapacity;
