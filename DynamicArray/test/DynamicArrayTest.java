@@ -280,8 +280,8 @@ class DynamicArrayTest {
 
 
         vector.remove();
-        assertEquals(complexArray.size() - 1,  vector.capacity(),
-                "The capacity should be double the original capacity");
+        assertEquals(complexArray.size() - 1,  vector.size(),
+                "The size of the vector should be one less than the size of the complex array");
         ComplexType lastElement = (ComplexType) vector.getElementAtIndex(vector.size() - 1);
         assertTrue(20 == lastElement.number && 't' == lastElement.symbol,
                 "The inserted pair of int and char should be the same as the last element");
@@ -294,4 +294,52 @@ class DynamicArrayTest {
                 "The inserted pair of int and char should be the same as the last element");
     }
 
+    //interacting with other array methods
+    public void testConcatenateFunc(){
+        List<Integer> array = Arrays.asList(1, 2, 3, 4, 5);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        List<Integer> array2 = Arrays.asList(6, 7, 8);
+        DynamicArray<Integer> vector2 = new DynamicArray<>(array2);
+
+        assertEquals(8, vector.size(), "The size is the sum of the two arrays");
+        //the following code check the elements in linear time
+        for(int i = 0; i < vector.size(); i++){
+            if( i < array.size()){
+                assertEquals(array.get(i), vector.getElementAtIndex(i), "The values of the array should be the same as the dyn array");
+            }
+            else {
+                assertEquals(array2.get(i - array.size()), vector.getElementAtIndex(i),
+                        "The values of the array2 should be the same as the dyn array");
+            }
+        }// end of for
+    }//end of test
+
+    @Test
+    public void testSwapFunctions(){
+        List<Integer> array = Arrays.asList(1, 2, 3, 4, 5);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+        vector.reserve(10);
+        int capacity1 = vector.capacity();
+
+        List<Integer> array2 = Arrays.asList(6, 7, 8);
+        DynamicArray<Integer> vector2 = new DynamicArray<>(array2);
+        vector2.reserve(15);
+        int capacity2 = vector2.capacity();
+
+        vector.swap(vector2);
+
+        //checking the swap pf the capacity value
+        assertEquals(capacity1, vector2.capacity());
+        assertEquals(capacity2, vector.capacity());
+
+        for(int i = 0; i < vector.size(); i++){
+            assertEquals(array2.get(i), vector.getElementAtIndex(i),
+                    "The elements of the first dyn array should be the same the elements of the second static array");
+        }
+        for(int i = 0; i < vector2.size(); i++){
+            assertEquals(array.get(i), vector2.getElementAtIndex(i),
+                    "The elements of the second dyn array should be the same the elements of the first static array");
+        }
+    }
 }
