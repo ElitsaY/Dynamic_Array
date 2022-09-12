@@ -105,7 +105,7 @@ public class DynamicArray<E>{
           size = 0;
      }
 
-     public void add(int element){
+     public void add(Object element){
           if( size + 1 >= capacity){
                resize(size * GROWTH_COEFFICIENT);
           }
@@ -118,7 +118,6 @@ public class DynamicArray<E>{
           }
           container[--size] = 0;
      }
-
-
+     
      //interacting with other array methods
 }

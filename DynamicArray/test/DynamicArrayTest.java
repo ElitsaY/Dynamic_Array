@@ -8,9 +8,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DynamicArrayTest {
-    public class ComplexType{
-        private int number;
-        private char symbol;
+    public static class ComplexType{
+        private final int number;
+        private final char symbol;
 
         ComplexType(int number, char symbol){
             this.number = number;
@@ -72,6 +72,7 @@ class DynamicArrayTest {
     public void testSetElementAtIndexFuncWithInvalidIndex(){
         List<Integer> array = Arrays.asList(1, 2, 3);
         DynamicArray<Integer> vector = new DynamicArray<>(array);
+
         assertThrows(IndexOutOfBoundsException.class, ()-> vector.setElementAtIndex( -1, 20),
                 "The function should throw exception. The dynamic array can not have negative indexes");
         assertThrows(IndexOutOfBoundsException.class, ()->vector.setElementAtIndex(4, 20),
@@ -98,6 +99,7 @@ class DynamicArrayTest {
                 "The function should throw exception. Can not get non existing element");
     }
 
+    //memory related functions tests
     @Test
     public void testReserveFuncWithNegativeRequiredCapacity() {
        DynamicArray<Integer> vector = new DynamicArray<>();
@@ -138,7 +140,7 @@ class DynamicArrayTest {
 
     @Test
     public void testResizeFuncThatShrinksNonEmptyDynamicArray() {
-        List<Integer> array = Arrays.asList(1, 2, 3);
+        List<Integer> array = Arrays.asList(1, 2, 3, 4, 5);
         DynamicArray<Integer> vector = new DynamicArray<>(array);
 
         vector.resize(3);
@@ -171,4 +173,124 @@ class DynamicArrayTest {
         assertEquals(minimumSpace, vector.capacity(), "The capacity should be equal to the minimum space = 1");
     }
 
+    //dynamic array operations tests
+    @Test
+    public void testEmptyFuncWithEmptyDynamicArray(){
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        assertTrue(vector.empty(), "The dynamic array should be empty");
+    }
+
+    @Test
+    public void testEmptyFuncWithNonEmptyDynamicArray(){
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+        assertFalse(vector.empty(), "The array is not empty");
+    }
+
+    @Test
+    public void testClearFuncWithNonEmptyDynamicArray(){
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.clear();
+        assertEquals(0, vector.size(), "The array should be empty");
+    }
+
+    @Test
+    public void testAddFunctionWithNonEmptyDynamicArray(){
+        List<Integer> array = Arrays.asList(1, 2, 3, 4, 5);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.add(6);
+        assertEquals(array.size() * 2,  vector.capacity(), "The capacity should be double the original capacity");
+        assertEquals(6, vector.getElementAtIndex(vector.size() -1 ), "The last element should be six");
+
+        vector.add(7);
+        assertEquals(7, vector.getElementAtIndex(vector.size() -1 ), "The last element should be 7");
+    }
+    @Test
+    public void testAddFunctionWithNonEmptyDynamicArrayOgComplexType(){
+        List<ComplexType> complexArray = new ArrayList<>();
+        complexArray.add(new ComplexType(19, 'e'));
+        complexArray.add(new ComplexType(10, 'l'));
+        complexArray.add(new ComplexType(20, 't'));
+        complexArray.add(new ComplexType(21, 'z'));
+
+        DynamicArray<ComplexType> vector = new DynamicArray<>(complexArray);
+
+
+        vector.add(new ComplexType(17, 'g'));
+        assertEquals(complexArray.size() * 2,  vector.capacity(),
+                "The capacity should be double the original capacity");
+        ComplexType lastElement = (ComplexType) vector.getElementAtIndex(vector.size() - 1);
+        assertTrue(17 == lastElement.number && 'g' == lastElement.symbol,
+                "The inserted pair of int and char should be the same as the last element");
+
+        vector.add(new ComplexType(2, 'i'));
+        lastElement = (ComplexType) vector.getElementAtIndex(vector.size() - 1);
+        assertTrue(2 == lastElement.number && 'i' == lastElement.symbol,
+                "The inserted pair of int and char should be the same as the last element");
+    }
+
+    @Test
+    public void testAddFuncWithEmptyDynamicArray(){
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        vector.add(19);
+        vector.add(9);
+        assertEquals(2, vector.size(), "The size should be 2");
+        assertEquals(9, vector.getElementAtIndex(vector.size() - 1), "The last element should be 9");
+
+        vector.add(7);
+        assertEquals(7, vector.getElementAtIndex(vector.size() - 1), "The last element should be 7");
+    }
+
+    @Test
+    public void testRemoveFuncOnEmptyDynamicArray(){
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        assertThrows(IndexOutOfBoundsException.class, ()-> vector.remove(),
+                "The function should throw exception because the array is empty. No elements ca be removed");
+    }
+
+    @Test
+    public void testRemoveFuncWithNonEmptyDynamicArray(){
+        List<Integer> array = Arrays.asList(1, 2, 3, 4, 5);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.remove();
+        assertEquals(array.size() - 1, vector.size(),
+                "The size of the dynamic array should be 1 less than array length");
+        assertEquals(4, vector.getElementAtIndex(vector.size() - 1),
+                "The last element should be equal to 4");
+
+        vector.remove();
+        //the result should be as the above tests but with one less position in the static array
+        assertEquals(3, vector.size());
+        assertEquals(3, vector.getElementAtIndex(vector.size() - 1));
+    }
+
+    @Test
+    public void testRemoveFunctionWithNonEmptyDynamicArrayOgComplexType(){
+        List<ComplexType> complexArray = new ArrayList<>();
+        complexArray.add(new ComplexType(19, 'e'));
+        complexArray.add(new ComplexType(10, 'l'));
+        complexArray.add(new ComplexType(20, 't'));
+        complexArray.add(new ComplexType(21, 'z'));
+
+        DynamicArray<ComplexType> vector = new DynamicArray<>(complexArray);
+
+
+        vector.remove();
+        assertEquals(complexArray.size() - 1,  vector.capacity(),
+                "The capacity should be double the original capacity");
+        ComplexType lastElement = (ComplexType) vector.getElementAtIndex(vector.size() - 1);
+        assertTrue(20 == lastElement.number && 't' == lastElement.symbol,
+                "The inserted pair of int and char should be the same as the last element");
+
+        vector.remove();
+        //the result should be as the above tests but with one less position in the static array
+        lastElement = (ComplexType) vector.getElementAtIndex(vector.size() - 1);
+        assertEquals(2, vector.size());
+        assertTrue(10 == lastElement.number && 'l' == lastElement.symbol,
+                "The inserted pair of int and char should be the same as the last element");
+    }
 }
