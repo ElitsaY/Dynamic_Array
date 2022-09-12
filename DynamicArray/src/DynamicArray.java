@@ -95,7 +95,7 @@ public class DynamicArray<E>{
                capacity = size;
           }
      }
-     
+
      //dynamic array operations
 
      //interacting with other array methods

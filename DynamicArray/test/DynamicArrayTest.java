@@ -98,4 +98,77 @@ class DynamicArrayTest {
                 "The function should throw exception. Can not get non existing element");
     }
 
+    @Test
+    public void testReserveFuncWithNegativeRequiredCapacity() {
+       DynamicArray<Integer> vector = new DynamicArray<>();
+        assertThrows(IllegalArgumentException.class, () -> vector.reserve(-1),
+                "The functions should throw exception.Negative space can not be reserved. ");
+    }
+
+    @Test
+    public void testReserveFuncWithRequiredCapacityLargerThanInitialCapacity() {
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        vector.reserve(20);
+        assertEquals(20, vector.capacity(), "The capacity should be equal to the required capacity");
+    }
+
+    @Test
+    public void testReserveFuncWithRequiredCapacityLessThanInitialCapacity() {
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        vector.reserve(5);
+        assertEquals(vector.getInitialCapacity(), vector.capacity(),
+                "The capacity should be equal to the initial capacity");
+    }
+
+    @Test
+    public void testResizeFuncWithNegativeNewSize() {
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        assertThrows(IllegalArgumentException.class, () -> vector.resize(-1),
+                "The size of the dynamic array can not be negative");
+    }
+
+    @Test
+    public void testResizeFuncThatExpandsNonEmptyDynamicArray() {
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.resize(20);
+        assertEquals(20, vector.capacity(), "The dynamic array capacity should be equal 20");
+    }
+
+    @Test
+    public void testResizeFuncThatShrinksNonEmptyDynamicArray() {
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.resize(3);
+        assertEquals(3, vector.size(), "The dynamic array size should be equal to 3");
+        assertEquals(array.get(2), vector.getElementAtIndex(vector.size() - 1), "The last element should be 3");
+    }
+
+    @Test
+    public void testResizeFuncWithEmptyDynamicArray() {
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        vector.resize(3);
+        assertEquals(3, vector.capacity(), "The capacity should be 3");
+    }
+
+    @Test
+    public void testShrinkToFitFuncWithNonEmptyDynamicArray() {
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.reserve(10);
+        vector.shrinkToFit();
+        assertEquals(array.size(), vector.capacity(), "The capacity should be equal to the array length");
+    }
+
+    @Test
+    public void testShrinkToFitFuncWithEmptyDynamicArray() {
+        DynamicArray<Integer> vector = new DynamicArray<>();
+        vector.shrinkToFit();
+        int minimumSpace = 1;
+        assertEquals(minimumSpace, vector.capacity(), "The capacity should be equal to the minimum space = 1");
+    }
+
 }
