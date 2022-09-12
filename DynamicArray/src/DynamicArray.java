@@ -60,7 +60,42 @@ public class DynamicArray<E>{
      }
 
      //memory related functions
+     public void reserve(int requiredCapacity){
+          if(requiredCapacity < 1){
+               throw new IllegalArgumentException("The requiredCapacity should be more than 1");
+          }
 
+          if (capacity < requiredCapacity){
+               container = Arrays.copyOf(container, requiredCapacity);
+               capacity = requiredCapacity;
+          }
+     }
+     //resize
+     public void resize(int newCapacity){
+          if(newCapacity < 1){
+               throw new IllegalArgumentException("The newCapacity should be more than 1");
+          }
+
+          container = Arrays.copyOf(container, newCapacity);
+          capacity = newCapacity;
+
+          if( size > newCapacity) {
+               size = newCapacity;
+          }
+     }
+
+     public void shrinkToFit(){
+          if(size == 0){
+               final int minimumSpace = 1;
+               container = Arrays.copyOf(container, minimumSpace);
+               capacity = minimumSpace;
+          }
+          else {
+               container = Arrays.copyOf(container, size);
+               capacity = size;
+          }
+     }
+     
      //dynamic array operations
 
      //interacting with other array methods
