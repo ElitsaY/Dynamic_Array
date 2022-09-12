@@ -293,4 +293,5 @@ class DynamicArrayTest {
         assertTrue(10 == lastElement.number && 'l' == lastElement.symbol,
                 "The inserted pair of int and char should be the same as the last element");
     }
+
 }

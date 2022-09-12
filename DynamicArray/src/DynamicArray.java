@@ -118,6 +118,28 @@ public class DynamicArray<E>{
           }
           container[--size] = 0;
      }
-     
+
      //interacting with other array methods
+     public void swap(DynamicArray<E> other){
+          Object[] tempContainer;
+          int tempSize, tempCapacity;
+
+          tempContainer = other.container;
+          tempSize = other.size;
+          tempCapacity = other.capacity;
+
+          other.container = container;
+          other.size = size;
+          other.capacity = capacity;
+
+          container = tempContainer;
+          size = tempSize;
+          capacity = tempCapacity;
+     }
+
+     public void concatenate(DynamicArray<E> other) {
+          for (int indx = 0; indx < other.size; indx++){
+               this.add(other.getElementAtIndex(indx));
+          }
+     }
 }
