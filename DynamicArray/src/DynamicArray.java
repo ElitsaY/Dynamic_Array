@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Collection;
 
 public class DynamicArray<E>{
      private final static int INITIAL_CAPACITY = 8;
@@ -17,20 +18,21 @@ public class DynamicArray<E>{
      }
 
      DynamicArray(int newSize) {
+          if(newSize < 1){
+               throw new IllegalArgumentException("Dynamic array with negative size can not be constructed");
+          }
           container = new Object[newSize];
           size = newSize;
           capacity = newSize;
      }
 
-     DynamicArray(Object[] newContainer){
-          container = Arrays.copyOf(newContainer, newContainer.length);
-          size = newContainer.length;
-          capacity = newContainer.length;;
+     DynamicArray(Collection<? extends E> newContainer){
+          container = newContainer.toArray();
+          size = newContainer.size();
+          capacity = newContainer.size();
      }
 
      //getters and setters
-<<<<<<< HEAD
-=======
       public int size() {
            return size;
       }
@@ -45,7 +47,7 @@ public class DynamicArray<E>{
 
      public Object getElementAtIndex(int index) {
           if(index < 0 || index >= size) {
-               throw new IndexOutOfBoundsException("The index is out og the array scope");
+               throw new IndexOutOfBoundsException("The index is out of the array scope");
           }
           return container[index];
      }
@@ -56,7 +58,6 @@ public class DynamicArray<E>{
           }
           container[index] = element;
      }
->>>>>>> helpUpdate
 
      //memory related functions
 
