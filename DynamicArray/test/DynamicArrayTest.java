@@ -66,4 +66,36 @@ class DynamicArrayTest {
             assertEquals(complexArray.get(i), vector.getElementAtIndex(i), "The elements should be equal");
         }
     }
+
+    //getters and setters tests
+    @Test
+    public void testSetElementAtIndexFuncWithInvalidIndex(){
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+        assertThrows(IndexOutOfBoundsException.class, ()-> vector.setElementAtIndex( -1, 20),
+                "The function should throw exception. The dynamic array can not have negative indexes");
+        assertThrows(IndexOutOfBoundsException.class, ()->vector.setElementAtIndex(4, 20),
+                "The function should throw exception. Can not assign value to non existing element");
+    }
+
+    @Test
+    public void testSetElementAtIndexFuncWithValidIndex(){
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        vector.setElementAtIndex(2, 19);
+        assertEquals(19, vector.getElementAtIndex(2), "The 3rd value should be updated to 19");
+    }
+
+    @Test
+    public void testGetElementAtIndexFuncWithInvalidIndex(){
+        List<Integer> array = Arrays.asList(1, 2, 3);
+        DynamicArray<Integer> vector = new DynamicArray<>(array);
+
+        assertThrows(IndexOutOfBoundsException.class, ()-> vector.getElementAtIndex( -1),
+                "The function should throw exception. The dynamic array can not have negative indexes");
+        assertThrows(IndexOutOfBoundsException.class, ()->vector.getElementAtIndex(6),
+                "The function should throw exception. Can not get non existing element");
+    }
+
 }
