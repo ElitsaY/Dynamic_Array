@@ -29,6 +29,34 @@ public class DynamicArray<E>{
      }
 
      //getters and setters
+<<<<<<< HEAD
+=======
+      public int size() {
+           return size;
+      }
+
+      public int capacity() {
+          return capacity;
+      }
+
+      public final int getInitialCapacity(){
+          return INITIAL_CAPACITY;
+      }
+
+     public Object getElementAtIndex(int index) {
+          if(index < 0 || index >= size) {
+               throw new IndexOutOfBoundsException("The index is out og the array scope");
+          }
+          return container[index];
+     }
+
+     public void setElementAtIndex(int index, Object element){
+          if(index < 0 || index >= size){
+               throw new IndexOutOfBoundsException("The index is out og the array scope");
+          }
+          container[index] = element;
+     }
+>>>>>>> helpUpdate
 
      //memory related functions
 
