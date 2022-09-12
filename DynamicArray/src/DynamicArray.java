@@ -102,6 +102,9 @@ public class DynamicArray<E>{
      }
 
      public void clear(){
+          for(Object element : container){
+               element = null;
+          }
           size = 0;
      }
 

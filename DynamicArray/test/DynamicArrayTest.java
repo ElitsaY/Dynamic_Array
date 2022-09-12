@@ -194,6 +194,7 @@ class DynamicArrayTest {
 
         vector.clear();
         assertEquals(0, vector.size(), "The array should be empty");
+        assertTrue(vector.getElementAtIndex(0) == null);
     }
 
     @Test
