@@ -140,9 +140,9 @@ public class DynamicArray<E>{
           capacity = tempCapacity;
      }
 
-     public void concatenate(DynamicArray<E> other) {
+    /* public void concatenate(DynamicArray<E> other) {
           for (int indx = 0; indx < other.size; indx++){
                this.add(other.getElementAtIndex(indx));
           }
-     }
+     }*/
 }
